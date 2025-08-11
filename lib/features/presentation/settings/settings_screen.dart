@@ -27,6 +27,7 @@ class SettingsScreen extends StatelessWidget {
       await Supabase.instance.client.auth.signOut();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('isLoggedIn');
+      await prefs.remove('userEmail');
       await Future.delayed(Duration(milliseconds: 1000));
       if (context.mounted) {
         Navigator.pop(context);

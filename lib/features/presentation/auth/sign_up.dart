@@ -18,14 +18,14 @@ class _SignUpState extends State<SignUp> {
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
 
-  final _nameCtrl = TextEditingController();
-  final _surnameCtrl = TextEditingController();
-  final _companyNameCtrl = TextEditingController();
-  final _emailCtrl = TextEditingController();
-  final _phoneCtrl = TextEditingController();
-  final _addressCtrl = TextEditingController();
-  final _passwordCtrl = TextEditingController();
-  final _confirmPasswordCtrl = TextEditingController();
+  final _nameCtrl = TextEditingController(),
+      _surnameCtrl = TextEditingController(),
+      _companyNameCtrl = TextEditingController(),
+      _emailCtrl = TextEditingController(),
+      _phoneCtrl = TextEditingController(),
+      _addressCtrl = TextEditingController(),
+      _passwordCtrl = TextEditingController(),
+      _confirmPasswordCtrl = TextEditingController();
 
   @override
   void dispose() {

@@ -16,9 +16,10 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-Future<void> saveLoginState() async {
+Future<void> saveLoginState(String email) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setBool('isLoggedIn', true);
+  await prefs.setString('userEmail', email);
 }
 
 class _LoginState extends State<Login> {
@@ -67,6 +68,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 40.h),
                 TextFormField(
+                  key: Key('emailField'),
                   controller: _emailCtrl,
                   style: AppTextStyle(fontSize: 14.sp),
                   keyboardType: TextInputType.emailAddress,
@@ -97,6 +99,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 15.h),
                 TextFormField(
+                  key: Key('passwordField'),
                   controller: _passwordCtrl,
                   style: AppTextStyle(fontSize: 14.sp),
                   obscureText: _obscurePassword,
@@ -170,6 +173,7 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     height: 48.h,
                     child: ElevatedButton(
+                      key: Key('loginButton'),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           setState(() => _isLoading = true);
@@ -185,7 +189,7 @@ class _LoginState extends State<Login> {
                                     AppColors.blueGrey, 'Login Successful!');
                               }
                               if (rememberMe) {
-                                await saveLoginState();
+                                await saveLoginState(_emailCtrl.text.trim());
                               }
                               if (context.mounted) {
                                 WidgetsBinding.instance

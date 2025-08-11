@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:proprint/core/constants/app_constants.dart';
+import 'package:proprint/core/helpers/auth_helper.dart';
 import 'package:proprint/core/models/cart_model.dart';
 import 'package:proprint/core/providers/cart_provider.dart';
 import 'package:proprint/core/providers/category_provider.dart';
@@ -195,12 +196,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: AppTextStyle(
                           fontSize: 18.sp, fontWeight: FontWeight.bold)),
                   if (provider.productProvider.selectedCategory == 'Products')
-                    InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, AppConstants.addCategory);
-                        },
-                        child: Icon(Icons.add_circle, color: AppColors.white)),
+                    FutureBuilder<bool>(
+                      future: AuthHelper.isAdmin(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == true) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, AppConstants.addCategory);
+                            },
+                            child:
+                                Icon(Icons.add_circle, color: AppColors.white),
+                          );
+                        }
+                        return SizedBox.shrink();
+                      },
+                    ),
+                  // InkWell(
+                  //     onTap: () {
+                  //       Navigator.pushNamed(
+                  //           context, AppConstants.addCategory);
+                  //     },
+                  //     child: Icon(Icons.add_circle, color: AppColors.white)),
                 ],
               ),
               SizedBox(height: 10.h),
@@ -229,9 +246,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   provider.productProvider
                                       .setCategory(category.name);
                                 },
-                                onLongPress: () {
-                                  _showCategoryOptions(context, category);
+                                onLongPress: () async {
+                                  if (await AuthHelper.isAdmin()) {
+                                    if (context.mounted) {
+                                      _showCategoryOptions(context, category);
+                                    }
+                                  }
                                 },
+                                // onLongPress: () {
+                                //   _showCategoryOptions(context, category);
+                                // },
                                 child: Column(
                                   children: [
                                     Container(
@@ -276,11 +300,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: AppTextStyle(
                           fontSize: 18.sp, fontWeight: FontWeight.bold)),
                   if (provider.productProvider.selectedCategory == 'Products')
-                    InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, AppConstants.addProduct);
-                        },
-                        child: Icon(Icons.add_circle, color: AppColors.white)),
+                    FutureBuilder<bool>(
+                      future: AuthHelper.isAdmin(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == true) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, AppConstants.addProduct);
+                            },
+                            child:
+                                Icon(Icons.add_circle, color: AppColors.white),
+                          );
+                        }
+                        return SizedBox.shrink();
+                      },
+                    ),
+                  // InkWell(
+                  //     onTap: () {
+                  //       Navigator.pushNamed(context, AppConstants.addProduct);
+                  //     },
+                  //     child: Icon(Icons.add_circle, color: AppColors.white)),
                 ],
               ),
               SizedBox(height: 15.h),
@@ -317,9 +357,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                         'prodDesc': product.prodDesc,
                                       });
                                 },
-                                onLongPress: () {
-                                  _showProductOptions(context, product);
+                                onLongPress: () async {
+                                  if (await AuthHelper.isAdmin()) {
+                                    if (context.mounted) {
+                                      _showProductOptions(context, product);
+                                    }
+                                  }
                                 },
+                                // onLongPress: () {
+                                //   _showProductOptions(context, product);
+                                // },
                                 child: Container(
                                   padding: EdgeInsets.all(8.r),
                                   decoration: BoxDecoration(
