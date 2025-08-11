@@ -116,6 +116,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 await Supabase.instance.client.auth.signOut();
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.remove('isLoggedIn');
+                await prefs.remove('userEmail');
                 if (!context.mounted) return;
                 Navigator.pushNamedAndRemoveUntil(
                     context, AppConstants.login, (route) => false);
