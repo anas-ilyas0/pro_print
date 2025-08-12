@@ -61,13 +61,13 @@ class ProductProvider with ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
-      final userId = supabase.auth.currentUser?.id;
-      if (userId == null) throw Exception("User not logged in");
+      // final userId = supabase.auth.currentUser?.id;
+      // if (userId == null) throw Exception("User not logged in");
 
       final response = await supabase
           .from('products')
           .select()
-          .eq('user_id', userId)
+          //.eq('user_id', userId)
           .ilike('category',
               _selectedCategory == 'Products' ? '%' : _selectedCategory);
 

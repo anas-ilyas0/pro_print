@@ -11,11 +11,14 @@ class UserNameProvider with ChangeNotifier {
     if (user != null) {
       final response = await Supabase.instance.client
           .from('profiles')
-          .select('name')
+          .select('name, surname')
           .eq('id', user.id)
           .single();
 
-      _name = response['name'] ?? '';
+      final firstName = response['name'] ?? '';
+      final lastName = response['surname'] ?? '';
+
+      _name = '$firstName $lastName'.trim();
       notifyListeners();
     }
   }
